@@ -2,7 +2,8 @@ version: '3'
 
 services:
   backend:
-    build: ./backend/
+    build: 
+      context: ./backend/
     ports:
       - "5000:5000"
     volumes:
