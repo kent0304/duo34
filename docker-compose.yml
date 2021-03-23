@@ -2,7 +2,8 @@ version: '3'
 
 services:
   backend:
-    build: ./backend/
+    build: 
+      context: ./backend/
     ports:
       - "5000:5000"
     volumes:
@@ -18,7 +19,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./db/:/usr/db/
+      - "./backend/db:/usr/src/duo34/backend/db"
     ports:
       - "3306:3306"
   frontend:
@@ -29,4 +30,4 @@ services:
     volumes:
       - "./frontend:/usr/src/duo34/frontend"
     tty: true
-    command: sh -c "cd app && npm run dev"
+    command: sh -c "cd app && yarn upgrade && yarn run dev"
