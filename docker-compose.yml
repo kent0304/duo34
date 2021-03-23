@@ -1,21 +1,18 @@
 version: '3'
 
 services:
-  duo_web:
+  backend:
     build: ./backend/
     ports:
       - "5000:5000"
     volumes:
-      - "./src/:/usr/src/"
+      - "./backend:/usr/src/duo34/backend"
     tty: true
     environment:
       TZ: Asia/Tokyo
       FLASK_APP: run.py
       FLASK_ENV: development
-    networks: 
-      - default
-      - shared-network
-    command: flask run -h 0.0.0.0
+    command: "flask run -h 0.0.0.0 --port 5000"
   db:
     image: nouchka/sqlite3:latest
     stdin_open: true
@@ -24,6 +21,3 @@ services:
       - ./db/:/usr/db/
     ports:
       - "3306:3306"
-networks: 
-  shared-network:
-    external: true
