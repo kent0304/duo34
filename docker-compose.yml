@@ -30,4 +30,4 @@ services:
     volumes:
       - "./frontend:/usr/src/duo34/frontend"
     tty: true
-    command: sh -c "cd app && yarn upgrade && yarn run dev"
+    command: sh -c "cd app && yarn run dev"
