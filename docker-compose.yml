@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend/
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./backend:/usr/src/duo34/backend"
+    tty: true
+    environment:
+      TZ: Asia/Tokyo
+      FLASK_APP: run.py
+      FLASK_ENV: development
+    command: "flask run -h 0.0.0.0 --port 5000"
+  db:
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./db/:/usr/db/
+    ports:
+      - "3306:3306"
+  frontend:
+    build: 
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./frontend:/usr/src/duo34/frontend"
+    tty: true
+    command: sh -c "cd app && npm run dev"
