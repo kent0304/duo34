@@ -21,3 +21,12 @@ services:
       - ./db/:/usr/db/
     ports:
       - "3306:3306"
+  frontend:
+    build: 
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./frontend:/usr/src/duo34/frontend"
+    tty: true
+    command: sh -c "cd app && npm run dev"
