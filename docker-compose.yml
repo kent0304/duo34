@@ -21,7 +21,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - "./backend/db:/usr/src/duo34/backend/db"
+      - "./backend/src/db:/usr/src/duo34/backend/src/db"
     ports:
       - "3306:3306"
   frontend:
