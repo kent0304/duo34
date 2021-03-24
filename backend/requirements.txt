@@ -2,3 +2,4 @@ flask == 1.1.2
 requests
 flask-cors
 pysqlite3
+Flask-SQLAlchemy
