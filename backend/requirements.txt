@@ -4,3 +4,4 @@ flask-cors
 pysqlite3
 SQLAlchemy
 Flask-SQLAlchemy
+Flask-Migrate

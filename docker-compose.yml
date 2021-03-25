@@ -13,17 +13,19 @@ services:
       TZ: Asia/Tokyo
       FLASK_APP: run.py
       FLASK_ENV: development
-    depends_on: 
-      - db
-    command: "flask run -h 0.0.0.0 --port 5000"
+    command: sh -c  "sh procedure.sh && flask run -h 0.0.0.0 --port 5000"
+
   db:
     image: nouchka/sqlite3:latest
     stdin_open: true
     tty: true
     volumes:
-      - "./backend/src/db:/usr/src/duo34/backend/src/db"
+      - "./backend/src/db/:/usr/src/duo34/backend/src/db/"
     ports:
       - "3306:3306"
+    depends_on: 
+      - backend
+      
   frontend:
     build: 
       context: ./frontend
