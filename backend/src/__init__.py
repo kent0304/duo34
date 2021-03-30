@@ -7,6 +7,8 @@ app.config.from_object('src.db.config')
 db = SQLAlchemy(app)
 
 import src.controllers.hello
+import src.controllers.section
+from src import models
 from src.models.Section import Section
 from src.models.Question import Question
 from src.models.Answer import Answer
