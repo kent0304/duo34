@@ -22,3 +22,14 @@ def post_section():
 
   response = jsonify(section.to_dict())
   return response, 201
+
+@app.route('/sections/<int:id>', methods=['PUT'])
+def put_section(id):
+  section = Section.query.filter_by(id=id).first()
+  if not section:
+    abort(404, {'code': 'Not found', 'message': 'section not found'})
+  
+  section.name = request.json.get('name')
+  db.session.commit()
+
+  return jsonify(section.to_dict())
