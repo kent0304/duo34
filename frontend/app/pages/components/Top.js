@@ -1,41 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { fetchSections } from '../sections/actions'
+import { getSectionsList } from '../sections/selectors';
 
-export default function Top() {
-  const [state, setState] = useState(0);
+import _ from 'lodash';
+
+function Top(props) {
+  const dispatch = useDispatch();
+  const [selected_section, setSection] = useState(0);
+  const selector = useSelector(state => state.sections);
+  const sections = getSectionsList(selector);
+
+  useEffect(() => {
+    dispatch(fetchSections());
+  }, [])
+
   // Todo: componentDidMountでapiからデータをもらいstoreを更新してもってくる
-  const sections = [
-    { id: 0, name: "section1" },
-    { id: 1, name: "section2" },
-    { id: 2, name: "section3" },
-    { id: 3, name: "section4" },
-    { id: 4, name: "section5" },
-  ];
 
   const onSubmit = (e) => {
     //　Todo: START_REQUESTをdispatch
     e.preventDefault(); // 遷移を一旦ストップ
-    console.log(sections[state].name)
   }
 
   const onChange = (e) => {
-    setState(e.target.value);
+    setSection(e.target.value);
   }
 
-  const options = sections.map(
-    (section) => (
-      <option key={section.id} value={section.id}>
-        {section.name}
-      </option>
+  const renderOptions = () => {
+    return (
+      _.map(selector, section => {
+        <option key={section.id} value={section.name} >
+          {section.name}
+        </option>
+      })
     )
-  );
+  }
   return (
     <form onSubmit={(e) => onSubmit(e)}>
       <div>
         <select
-          value={state}
+          value={selected_section}
           onChange={onChange}
         >
-          {options}
+          {renderOptions()}
         </select>
       </div>
       <div>
@@ -44,3 +51,8 @@ export default function Top() {
     </form>
   );
 };
+
+const mapStateToProps = state => ({ state })
+const mapDispatchToProps = ({ fetchSections })
+
+export default connect(mapStateToProps, mapDispatchToProps)(Top);
