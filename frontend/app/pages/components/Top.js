@@ -7,18 +7,18 @@ import _ from 'lodash';
 
 function Top(props) {
   const dispatch = useDispatch();
-  const [selected_section, setSection] = useState(0);
+  const [selected_section, setSection] = useState(1);
   const selector = useSelector(state => state.sections);
-  const sections = getSectionsList(selector);
+  const options = props.sections;
 
   useEffect(() => {
     dispatch(fetchSections());
   }, [])
 
-  // Todo: componentDidMountでapiからデータをもらいstoreを更新してもってくる
 
   const onSubmit = (e) => {
     //　Todo: START_REQUESTをdispatch
+    console.log(options[selected_section].name)
     e.preventDefault(); // 遷移を一旦ストップ
   }
 
@@ -26,15 +26,17 @@ function Top(props) {
     setSection(e.target.value);
   }
 
+
   const renderOptions = () => {
     return (
-      _.map(selector, section => {
-        <option key={section.id} value={section.name} >
+      _.map(options, section => (
+        <option key={section.id} value={section.id}>
           {section.name}
         </option>
-      })
+      ))
     )
   }
+
   return (
     <form onSubmit={(e) => onSubmit(e)}>
       <div>
@@ -52,7 +54,11 @@ function Top(props) {
   );
 };
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = state => {
+  return {
+    sections: state.sections
+  }
+}
 const mapDispatchToProps = ({ fetchSections })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Top);
