@@ -13,8 +13,8 @@ export default function Header() {
       <Link href="/result">
         <button>Result</button>
       </Link>
-      <Link href="/admin/sessions">
-        <button>Sessions管理</button>
+      <Link href="/admin/sections">
+        <button>Sections管理</button>
       </Link>
     </div>
   )
