@@ -1,50 +1,64 @@
-import React, { useState } from 'react';
-import styles from '../../styles/Home.module.scss'
+import React, { useEffect, useState } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { fetchSections } from '../sections/actions'
+import { getSectionsList } from '../sections/selectors';
 
-export default function Top() {
-  const [state, setState] = useState(0);
-  // Todo: componentDidMountでapiからデータをもらいstoreを更新してもってくる
-  const sections = [
-    { id: 0, name: "section1" },
-    { id: 1, name: "section2" },
-    { id: 2, name: "section3" },
-    { id: 3, name: "section4" },
-    { id: 4, name: "section5" },
-  ];
+import _ from 'lodash';
+
+function Top(props) {
+  const dispatch = useDispatch();
+  const [selected_section, setSection] = useState(1);
+  const selector = useSelector(state => state.sections);
+  const options = props.sections;
+
+  useEffect(() => {
+    dispatch(fetchSections());
+  }, [])
+
 
   const onSubmit = (e) => {
     //　Todo: START_REQUESTをdispatch
+    console.log(options[selected_section].name)
     e.preventDefault(); // 遷移を一旦ストップ
-    console.log(sections[state].name)
   }
 
   const onChange = (e) => {
-    setState(e.target.value);
+    setSection(e.target.value);
   }
 
-  const options = sections.map(
-    (section) => (
-      <option key={section.id} value={section.id}>
-        {section.name}
-      </option>
-    )
-  );
-  return (
-    <div className={styles.container}>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <div>
-          <select
-            value={state}
-            onChange={onChange}
-          >
-            {options}
-          </select>
-        </div>
-        <div>
-          <input type="submit" value="スタート" />
-        </div>
-      </form>
-    </div>
 
+  const renderOptions = () => {
+    return (
+      _.map(options, section => (
+        <option key={section.id} value={section.id}>
+          {section.name}
+        </option>
+      ))
+    )
+  }
+
+  return (
+    <form onSubmit={(e) => onSubmit(e)}>
+      <div>
+        <select
+          value={selected_section}
+          onChange={onChange}
+        >
+          {renderOptions()}
+        </select>
+      </div>
+      <div>
+        <input type="submit" value="スタート" />
+      </div>
+    </form>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    sections: state.sections
+  }
+}
+const mapDispatchToProps = ({ fetchSections })
+
+export default connect(mapStateToProps, mapDispatchToProps)(Top);
