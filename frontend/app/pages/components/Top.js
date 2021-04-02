@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../../styles/Home.module.scss'
 
 export default function Top() {
   const [state, setState] = useState(0);
@@ -29,18 +30,21 @@ export default function Top() {
     )
   );
   return (
-    <form onSubmit={(e) => onSubmit(e)}>
-      <div>
-        <select
-          value={state}
-          onChange={onChange}
-        >
-          {options}
-        </select>
-      </div>
-      <div>
-        <input type="submit" value="スタート" />
-      </div>
-    </form>
+    <div className={styles.container}>
+      <form onSubmit={(e) => onSubmit(e)}>
+        <div>
+          <select
+            value={state}
+            onChange={onChange}
+          >
+            {options}
+          </select>
+        </div>
+        <div>
+          <input type="submit" value="スタート" />
+        </div>
+      </form>
+    </div>
+
   );
 };
