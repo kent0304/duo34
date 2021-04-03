@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { fetchSections } from '../../sections/actions';
+import React, { useEffect, useState } from 'react';
+import { fetchSections, postSection } from '../../sections/actions';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Home.module.scss';
 import Layout from '../../components/Layout';
@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 function AdminSection(props) {
   const dispatch = useDispatch();
+  const [newSection, setSection] = useState();
 
   useEffect(() => {
     dispatch(fetchSections());
@@ -21,6 +22,14 @@ function AdminSection(props) {
         </tr>
       ))
     )}
+
+  const handleChange =  (e) => {
+    setSection(e.target.value)
+  }
+
+  const handleClick = () => {
+    dispatch(postSection(JSON.jsonify({name: newSection})));
+  };
 
   return (
     <Layout>
@@ -37,6 +46,10 @@ function AdminSection(props) {
             {renderSections()}
           </tbody>
         </table>
+        <div>
+          <input type='text' onChange={handleChange}></input>
+          <button onClick={handleClick}>add</button>
+        </div>
       </div>
     </Layout>
     
