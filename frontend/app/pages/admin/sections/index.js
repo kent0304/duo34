@@ -28,7 +28,7 @@ function AdminSection(props) {
   }
 
   const handleClick = () => {
-    dispatch(postSection(JSON.jsonify({name: newSection})));
+    dispatch(postSection({name: newSection}));
   };
 
   return (

@@ -8,7 +8,7 @@ export const sectionsReducer = (state = initialState.sections, action) => {
     case FETCH_SECTIONS:
       return _.mapKeys(action.response.data.sections, 'id')
     case POST_SECTION:
-      const section = action.section
+      const section = action.response.data
       return { ...state, [section.id]: section }
     default:
       return state

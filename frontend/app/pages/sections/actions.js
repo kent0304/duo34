@@ -10,6 +10,6 @@ export const fetchSections = () => async dispatch => {
 }
 
 export const postSection = (section) => async dispatch => {
-  const response = await axios.post(`${ROOT_URL}/section`, section)
+  const response = await axios.post(`${ROOT_URL}/section`, section) 
   dispatch({ type: POST_SECTION, response })
 }
