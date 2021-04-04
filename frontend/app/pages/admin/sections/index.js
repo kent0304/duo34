@@ -31,8 +31,9 @@ function AdminSection(props) {
   }
 
   const handleClick = () => {
-    dispatch(postSection({name: newSection}));
-    setSection('');
+    dispatch(postSection({name: newSection})).then(
+      setSection('')
+    );
   };
 
   const disabledCondition = (text) => {
@@ -67,7 +68,7 @@ function AdminSection(props) {
           </tbody>
         </table>
         <div>
-          <input type='text' onChange={handleChange}></input>
+          <input type='text' onChange={handleChange} value={newSection}></input>
           <button onClick={handleClick} disabled={isDisabled}>追加</button>
         </div>
       </div>
