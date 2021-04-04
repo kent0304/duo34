@@ -7,7 +7,8 @@ import _ from 'lodash';
 
 function AdminSection(props) {
   const dispatch = useDispatch();
-  const [newSection, setSection] = useState();
+  const [newSection, setSection] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     dispatch(fetchSections());
@@ -19,17 +20,35 @@ function AdminSection(props) {
         <tr key={section.id}>
           <td>{section.id}</td>
           <td>{section.name}</td>
+          <td><button>更新</button></td>
         </tr>
       ))
     )}
 
-  const handleChange =  (e) => {
-    setSection(e.target.value)
+  const handleChange = (e) => {
+    setSection(e.target.value);
+    setIsDisabled(disabledCondition(e.target.value));
   }
 
   const handleClick = () => {
     dispatch(postSection({name: newSection}));
+    setSection('');
   };
+
+  const disabledCondition = (text) => {
+    const isFind = _.findKey(props.sections, { name: text });
+    let condition = true;
+    // 先頭がsectionで section◯◯ のときfalse
+    if( !text.indexOf('section') && text !== 'section' ){
+      condition = false;
+    }
+    // props.sections内にtextが存在していなければfalse
+    // isFind!==undefindはみつかったの意
+    if( isFind !== undefined ){
+      condition = true;
+    }
+    return condition
+  }
 
   return (
     <Layout>
@@ -40,6 +59,7 @@ function AdminSection(props) {
             <tr>
               <th>id</th>
               <th>section</th>
+              <th>更新</th>
             </tr>
           </thead>
           <tbody>
@@ -48,11 +68,10 @@ function AdminSection(props) {
         </table>
         <div>
           <input type='text' onChange={handleChange}></input>
-          <button onClick={handleClick}>add</button>
+          <button onClick={handleClick} disabled={isDisabled}>追加</button>
         </div>
       </div>
-    </Layout>
-    
+    </Layout> 
   )
 }
 

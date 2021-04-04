@@ -1,6 +1,7 @@
 import axios from '../settings/axios';
 export const FETCH_SECTIONS = 'FETCH_SECTIONS';
-export const POST_SECTION = 'POST_SECTION';
+export const CREATE_SECTION = 'CREATE_SECTION';
+export const PUT_SECTION = 'PUT_SECTION';
 
 const ROOT_URL = 'http://localhost:5000'
 
@@ -11,5 +12,10 @@ export const fetchSections = () => async dispatch => {
 
 export const postSection = (section) => async dispatch => {
   const response = await axios.post(`${ROOT_URL}/section`, section) 
-  dispatch({ type: POST_SECTION, response })
+  dispatch({ type: CREATE_SECTION, response })
+}
+
+export const putSection = (section) => async dispatch => {
+  const response = await axios.put(`${ROOT_URL}/section/${section.id}`, section.name)
+  dispatch({type: PUT_SECTION, response})
 }
