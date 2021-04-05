@@ -31,7 +31,9 @@ function AdminSection(props) {
 
   const openModal = (e) => {
     const id = e.target.parentNode.parentElement.childNodes[0].innerText;
-    dispatch(fetchSectionById(id))
+    dispatch(fetchSectionById(id)).then(
+      setIsOpenModal(false)
+    )
   }
 
   const handleChange = (e) => {

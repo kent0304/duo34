@@ -9,7 +9,7 @@ function Top(props) {
   const dispatch = useDispatch();
   const [selected_section, setSection] = useState(1);
   const selector = useSelector(state => state.sections);
-  const options = props.sections;
+  const options = props.state.sections.list;
 
   useEffect(() => {
     dispatch(fetchSections());
@@ -56,7 +56,7 @@ function Top(props) {
 
 const mapStateToProps = state => {
   return {
-    sections: state
+    state
   }
 }
 const mapDispatchToProps = ({ fetchSections })
