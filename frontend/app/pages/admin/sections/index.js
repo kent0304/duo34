@@ -17,15 +17,17 @@ function AdminSection(props) {
   }, [])
 
   const renderSections = () => {
-    return (
-      _.map(props.sections, section => (
-        <tr key={section.id}>
-          <td>{section.id}</td>
-          <td>{section.name}</td>
-          <td><button onClick={openModal}>更新</button></td>
-        </tr>
-      ))
-    )}
+    if(_.size(props.state.sections) !== 0) {
+      return (
+        _.map(props.state.sections.list, section => (
+          <tr key={section.id}>
+            <td>{section.id}</td>
+            <td>{section.name}</td>
+            <td><button onClick={openModal}>更新</button></td>
+          </tr>
+        ))
+      )}
+    }
 
   const openModal = (e) => {
     const id = e.target.parentNode.parentElement.childNodes[0].innerText;
@@ -44,7 +46,7 @@ function AdminSection(props) {
   };
 
   const disabledCondition = (text) => {
-    const isFind = _.findKey(props.sections, { name: text });
+    const isFind = _.findKey(props.state.sections.list, { name: text });
     let condition = true;
     // 先頭がsectionで section◯◯ のときfalse
     if( !text.indexOf('section') && text !== 'section' ){
@@ -85,7 +87,7 @@ function AdminSection(props) {
 
 const mapStateToProps = state => {
   return {
-    sections: state.sections
+    state
   }
 }
 const mapDispatchToProps = ({ fetchSections, fetchSectionById, postSection })

@@ -56,7 +56,7 @@ function Top(props) {
 
 const mapStateToProps = state => {
   return {
-    sections: state.sections
+    sections: state
   }
 }
 const mapDispatchToProps = ({ fetchSections })

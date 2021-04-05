@@ -13,8 +13,7 @@ export const fetchSections = () => async dispatch => {
 
 export const fetchSectionById = (id) => async dispatch => {
   const response = await axios.get(`${ROOT_URL}/sections/${id}`)
-  console.log(response)
-  // dispatch({ type: FETCH_SECTIONS, response })
+  dispatch({ type: FETCH_SECTION, response })
 }
 
 export const postSection = (section) => async dispatch => {
