@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { fetchSections } from '../sections/actions'
-import { getSectionsList } from '../sections/selectors';
 
 import _ from 'lodash';
 
 function Top(props) {
   const dispatch = useDispatch();
   const [selected_section, setSection] = useState(1);
-  const selector = useSelector(state => state.sections);
   const options = props.state.sections.list;
 
   useEffect(() => {

@@ -9,7 +9,7 @@ export const sectionsReducer = (state = initialState, action) => {
       return { list: _.mapKeys(action.response.data.sections, 'id') }
     case FETCH_SECTION:
       const selected_section = action.response.data
-      return { ...state, selected_section: section }
+      return { ...state, selected_section: selected_section }
     case CREATE_SECTION:
       const section = action.response.data
       return { ...state, [section.id]: section }

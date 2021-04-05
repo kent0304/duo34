@@ -21,7 +21,7 @@ export const postSection = (section) => async dispatch => {
   dispatch({ type: CREATE_SECTION, response })
 }
 
-export const putSection = (section) => async dispatch => {
-  const response = await axios.put(`${ROOT_URL}/section/${section.id}`, section.name)
+export const putSection = (id, name) => async dispatch => {
+  const response = await axios.put(`${ROOT_URL}/sections/${id}`, name)
   dispatch({type: PUT_SECTION, response})
 }

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { fetchSections, fetchSectionById, postSection } from '../../sections/actions';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import styles from '../../../styles/Home.module.scss';
 import Layout from '../../components/Layout';
+import Modal from 'react-modal';
 import SectionModal from '../../components/SectionModal';
 import _ from 'lodash';
+
+Modal.setAppElement('#admin-sections')
 
 function AdminSection(props) {
   const dispatch = useDispatch();
@@ -32,7 +35,7 @@ function AdminSection(props) {
   const openModal = (e) => {
     const id = e.target.parentNode.parentElement.childNodes[0].innerText;
     dispatch(fetchSectionById(id)).then(
-      setIsOpenModal(false)
+      setIsOpenModal(true)
     )
   }
 
@@ -64,8 +67,12 @@ function AdminSection(props) {
 
   return (
     <Layout>
-      <div className={styles.container}>
+      <div id='admin-sections' className={styles.container}>
         <h2>Section管理画面</h2>
+        <Modal isOpen={isOpenModal} >
+          <SectionModal />
+          <button onClick={() => setIsOpenModal(false)}>閉じる</button>
+        </Modal>
         <table>
           <thead>
             <tr>
