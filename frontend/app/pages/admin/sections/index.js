@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { fetchSections, postSection } from '../../sections/actions';
+import { fetchSections, fetchSectionById, postSection } from '../../sections/actions';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Home.module.scss';
 import Layout from '../../components/Layout';
+import SectionModal from '../../components/SectionModal';
 import _ from 'lodash';
 
 function AdminSection(props) {
   const dispatch = useDispatch();
   const [newSection, setSection] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchSections());
@@ -20,10 +22,15 @@ function AdminSection(props) {
         <tr key={section.id}>
           <td>{section.id}</td>
           <td>{section.name}</td>
-          <td><button>更新</button></td>
+          <td><button onClick={openModal}>更新</button></td>
         </tr>
       ))
     )}
+
+  const openModal = (e) => {
+    const id = e.target.parentNode.parentElement.childNodes[0].innerText;
+    dispatch(fetchSectionById(id))
+  }
 
   const handleChange = (e) => {
     setSection(e.target.value);
@@ -81,6 +88,6 @@ const mapStateToProps = state => {
     sections: state.sections
   }
 }
-const mapDispatchToProps = ({ fetchSections })
+const mapDispatchToProps = ({ fetchSections, fetchSectionById, postSection })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminSection);
