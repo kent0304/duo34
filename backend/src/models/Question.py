@@ -9,8 +9,8 @@ class Question(db.Model):
   section_id = db.Column(db.Integer, nullable=False)
   english_text = db.Column(db.String(255), nullable=False)
   japanese_text = db.Column(db.String(255), nullable=False)
-  created_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.now(pytz.timzone('Asia/Tokyo')))
-  updated_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.now(pytz.timzone('Asia/Tokyo')))
+  created_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.now(pytz.timezone('Asia/Tokyo')))
+  updated_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.now(pytz.timezone('Asia/Tokyo')))
 
   def __init__(self, question_number, section_id, english_text, japanese_text):
     self.question_number = question_number
@@ -25,7 +25,7 @@ class Question(db.Model):
       'section_id': self.section_id,
       'english_text': self.english_text,
       'japanese_text': self.japanese_text,
-      'created_at': self.created_at
+      'created_at': self.created_at,
       'updated_at' : self.updated_at
     }
 
