@@ -1,14 +1,15 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../../styles/Home.module.scss'
+import Layout from '../components/Layout'
 
 export default function Result() {
   return (
-    <div className={styles.container}>
+    <Layout>
+      <div className={styles.container}>
+          ここは結果のページ
+      </div>
+    </Layout>
 
-      ここは結果のページ
-
-
-    </div>
   )
 }

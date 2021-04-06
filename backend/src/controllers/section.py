@@ -5,12 +5,12 @@ from src.models.Section import Section
 @app.route('/sections', methods=['GET'])
 def get_sections_list():
   sections = Section.query.all()
-  return jsonify({"sections": [section.to_dict() for section in sections]})
+  return jsonify({"sections": [section.to_dict() for section in sections]}), 200
 
 @app.route('/sections/<int:id>', methods=['GET'])
 def get_section(id=None):
   section = Section.query.filter_by(id=id).first()
-  return jsonify(section.to_dict())
+  return jsonify(section.to_dict()), 200
 
 @app.route('/section', methods=['POST'])
 def post_section():
