@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchSections, fetchSectionById, postSection } from '../../sections/actions';
 import { connect, useDispatch } from 'react-redux';
+import Router from 'next/router';
 import styles from '../../../styles/Home.module.scss';
 import Layout from '../../components/Layout';
 import Modal from 'react-modal';
@@ -48,6 +49,8 @@ function AdminSection(props) {
     dispatch(postSection({name: newSection})).then(
       setSection('')
     );
+    // Problem: sectionsが再レンダーされないためリロード
+    Router.reload()
   };
 
   const disabledCondition = (text) => {
