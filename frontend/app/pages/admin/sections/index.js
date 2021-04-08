@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import SectionModal from '../../components/SectionModal';
 import _ from 'lodash';
 
+// ここでたまーにエラー吐く（なぜ？）
 Modal.setAppElement('#admin-sections')
 
 function AdminSection(props) {
