@@ -8,6 +8,7 @@ db = SQLAlchemy(app)
 
 import src.controllers.hello
 import src.controllers.section
+import src.controllers.question
 from src import models
 from src.models.Section import Section
 from src.models.Question import Question

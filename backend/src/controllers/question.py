@@ -39,7 +39,7 @@ def put_question(id):
   question.section_id = request.json.get('section_id')
   question.english_text = request.json.get('english_text')
   question.japanese_text = request.json.get('japanese_text')
-  question.updated_at = dt.datetime.now(pytz.timzone('Asia/Tokyo')
+  question.updated_at = dt.datetime.now(pytz.timezone('Asia/Tokyo'))
 
   db.session.commit()
 
