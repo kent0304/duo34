@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { fetchSections } from '../../sections/actions';
-import { fetchQuestions, postQuestion } from '../../questions/actions';
+import { fetchQuestions, fetchQuestionById, postQuestion } from '../../questions/actions';
 import styles from '../../../styles/Home.module.scss';
+import Modal from 'react-modal';
+import QuestionModal from '../../components/QuestionModal';
 import Layout from '../../components/Layout';
 import _ from 'lodash';
 
 function AdminQuestion(props) {
+
   const dispatch = useDispatch();
   const [newSectionId, setSectionId] = useState('1');
   const [newNumber, setNumber] = useState(0);
@@ -14,17 +17,15 @@ function AdminQuestion(props) {
   const [newJapText, setJapText] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const sections = props.state.sections.list;
 
   useEffect(() => {
     dispatch(fetchQuestions());
     dispatch(fetchSections());
+    Modal.setAppElement('body')
   }, []);
 
   const handleSubmit = (e) => {
-    console.log(newNumber)
-    console.log(newSectionId)
-    console.log(newEnText)
-    console.log(newJapText)
     const question = {
       'question_number': newNumber,
       'section_id': newSectionId,
@@ -32,7 +33,6 @@ function AdminQuestion(props) {
       'japanese_text': newJapText
     }
     dispatch(postQuestion(question))
-    e.preventDefault()
   }
 
   const renderQuestions = () => {
@@ -42,7 +42,7 @@ function AdminQuestion(props) {
           <tr key={question.id}>
             <td>{question.id}</td>
             <td>{question.question_number}</td>
-            <td>{question.section_id}</td>
+            <td>{sections[question.section_id].name}</td>
             <td>{question.english_text}</td>
             <td>{question.japanese_text}</td>
             <td><button onClick={openModal}>修正</button></td>
@@ -51,8 +51,12 @@ function AdminQuestion(props) {
       )}
     }
   
-  const openModal = () => {
-    console.log('clicked');
+  const openModal = (e) => {
+    console.log(e.target.parentNode.parentElement.childNodes[0].innerText);
+    const id = e.target.parentNode.parentElement.childNodes[0].innerText;
+    dispatch(fetchQuestionById(id)).then(
+      setIsOpenModal(true)
+    )
   };
 
   const renderOptions = () => {
@@ -76,8 +80,12 @@ function AdminQuestion(props) {
   }
 
   return (
-    <Layout>
+    <Layout id='admin-questions'>
         <h1>questions管理画面</h1>
+        <Modal isOpen={isOpenModal} >
+          <QuestionModal />
+          <button onClick={() => setIsOpenModal(false)}>閉じる</button>
+        </Modal>
         <table>
           <thead>
             <tr>

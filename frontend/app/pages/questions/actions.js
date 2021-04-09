@@ -21,7 +21,7 @@ export const postQuestion = (question) => async dispatch => {
   dispatch({ type: CREATE_QUESTION, response })
 }
 
-export const putQuestion = (id, name) => async dispatch => {
-  const response = await axios.put(`${ROOT_URL}/questions/${id}`, name)
+export const putQuestion = (id, question) => async dispatch => {
+  const response = await axios.put(`${ROOT_URL}/questions/${id}`, question)
   dispatch({type: PUT_QUESTION, response})
 }

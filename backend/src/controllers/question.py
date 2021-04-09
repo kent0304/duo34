@@ -43,4 +43,4 @@ def put_question(id):
 
   db.session.commit()
 
-  return jsonify(question.to_dict())
+  return jsonify(question.to_dict()), 200

@@ -10,7 +10,6 @@ import _ from 'lodash';
 
 
 function AdminSection(props) {
-  // Modal.setAppElement('#admin-sections')
 
   const dispatch = useDispatch();
   const [newSection, setSection] = useState('');
@@ -19,6 +18,7 @@ function AdminSection(props) {
 
   useEffect(() => {
     dispatch(fetchSections());
+    Modal.setAppElement('body')
   }, [])
 
   const renderSections = () => {
@@ -50,7 +50,7 @@ function AdminSection(props) {
     dispatch(postSection({name: newSection})).then(
       setSection('')
     );
-    // Problem: sectionsが再レンダーされないためリロード
+    // Problem: sectionsが再レンダーされないためリロードで対処
     Router.reload()
   };
 
@@ -71,7 +71,7 @@ function AdminSection(props) {
 
   return (
     <Layout>
-      <div id='admin-sections' className={styles.container}>
+      <div className={styles.container}>
         <h2>Section管理画面</h2>
         <Modal isOpen={isOpenModal} >
           <SectionModal />

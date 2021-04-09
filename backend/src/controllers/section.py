@@ -32,4 +32,4 @@ def put_section(id):
   section.name = request.json.get('name')
   db.session.commit()
 
-  return jsonify(section.to_dict())
+  return jsonify(section.to_dict()), 200
