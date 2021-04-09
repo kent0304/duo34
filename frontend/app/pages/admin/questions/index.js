@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { fetchSections } from '../../sections/actions';
-import { fetchQuestions } from '../../questions/actions';
+import { fetchQuestions, postQuestion } from '../../questions/actions';
 import styles from '../../../styles/Home.module.scss';
 import Layout from '../../components/Layout';
 import _ from 'lodash';
 
 function AdminQuestion(props) {
   const dispatch = useDispatch();
-  const [newSection, setSection] = useState('section1');
-  const [newNumber, setNumber] = useState('');
+  const [newSectionId, setSectionId] = useState('1');
+  const [newNumber, setNumber] = useState(0);
   const [newEnText, setEnText] = useState('');
   const [newJapText, setJapText] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -22,9 +22,16 @@ function AdminQuestion(props) {
 
   const handleSubmit = (e) => {
     console.log(newNumber)
-    console.log(newSection)
+    console.log(newSectionId)
     console.log(newEnText)
     console.log(newJapText)
+    const question = {
+      'question_number': newNumber,
+      'section_id': newSectionId,
+      'english_text': newEnText,
+      'japanese_text': newJapText
+    }
+    dispatch(postQuestion(question))
     e.preventDefault()
   }
 
@@ -38,7 +45,7 @@ function AdminQuestion(props) {
             <td>{question.section_id}</td>
             <td>{question.english_text}</td>
             <td>{question.japanese_text}</td>
-            <td><button onClick={openModal}>更新</button></td>
+            <td><button onClick={openModal}>修正</button></td>
           </tr>
         ))
       )}
@@ -51,7 +58,7 @@ function AdminQuestion(props) {
   const renderOptions = () => {
     return (
       _.map(props.state.sections.list, section => (
-        <option key={section.id} value={section.name}>
+        <option key={section.id} value={section.id}>
           {section.name}
         </option>
       ))
@@ -61,8 +68,8 @@ function AdminQuestion(props) {
   const renderSectionsList = () => {
     return(
       <select
-        value={newSection}
-        onChange={(e)=>{setSection(e.target.value)}}>
+        value={newSectionId}
+        onChange={(e)=>{setSectionId(e.target.value)}}>
         {renderOptions()}
       </select>
     )
@@ -79,7 +86,7 @@ function AdminQuestion(props) {
               <th>section</th>
               <th>English text</th>
               <th>Japanese text</th>
-              <th>更新</th>
+              <th>修正</th>
             </tr>
           </thead>
           <tbody>
