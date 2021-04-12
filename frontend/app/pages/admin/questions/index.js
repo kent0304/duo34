@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { fetchSections } from '../../sections/actions';
 import { fetchQuestions, fetchQuestionById, postQuestion } from '../../questions/actions';
-import styles from '../../../styles/Home.module.scss';
 import Modal from 'react-modal';
 import QuestionModal from '../../components/QuestionModal';
 import Layout from '../../components/Layout';
@@ -11,13 +10,13 @@ import _ from 'lodash';
 function AdminQuestion(props) {
 
   const dispatch = useDispatch();
-  const [newSectionId, setSectionId] = useState('1');
+  const [newSectionId, setSectionId] = useState(1);
   const [newNumber, setNumber] = useState(0);
   const [newEnText, setEnText] = useState('');
   const [newJapText, setJapText] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const sections = props.state.sections.list;
+  let sections = props.state.sections.list;
 
   useEffect(() => {
     dispatch(fetchQuestions());
@@ -25,7 +24,7 @@ function AdminQuestion(props) {
     Modal.setAppElement('body')
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     const question = {
       'question_number': newNumber,
       'section_id': newSectionId,
@@ -37,6 +36,10 @@ function AdminQuestion(props) {
 
   const renderQuestions = () => {
     if(_.size(props.state.questions) !== 0) {
+      sections = props.state.sections.list;
+      // dispatchのタイミングによってエラーが起こるため未定義の場合は無視(根本の解決になってない)
+      // 解決策：非同期処理を完全に理解する
+      if(sections === undefined) return null;
       return (
         _.map(props.state.questions.list, question => (
           <tr key={question.id}>
@@ -52,7 +55,6 @@ function AdminQuestion(props) {
     }
   
   const openModal = (e) => {
-    console.log(e.target.parentNode.parentElement.childNodes[0].innerText);
     const id = e.target.parentNode.parentElement.childNodes[0].innerText;
     dispatch(fetchQuestionById(id)).then(
       setIsOpenModal(true)
@@ -77,6 +79,17 @@ function AdminQuestion(props) {
         {renderOptions()}
       </select>
     )
+  }
+
+  const handleNumberChange = (e) => {
+    const value = e.target.value;
+    setNumber(value);
+    const isFind = _.findKey(props.state.questions.list, { 'question_number': Number(value) });
+    if(isFind !== undefined) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
   }
 
   return (
@@ -105,8 +118,9 @@ function AdminQuestion(props) {
           <form onSubmit={handleSubmit}>
             <div>
               Number:
-              <input type='number' name='number' value={newNumber} onChange={(e)=>{setNumber(e.target.value)}} />
+              <input type='number' name='number' value={newNumber} onChange={(e)=>{handleNumberChange(e)}} />
             </div>
+            {/* TODO: error メッセージ表示したい */}
             <div>
               Section:
               {renderSectionsList()}
@@ -119,7 +133,7 @@ function AdminQuestion(props) {
               Japanese:
               <input type='text' name='japanses_text' value={newJapText} onChange={(e)=>{setJapText(e.target.value)}} />
             </div>
-            <input type='submit' valie="add" />
+            <input type='submit' value="追加" disabled={isDisabled} />
           </form>
         </div>
     </Layout>
