@@ -1,6 +1,7 @@
 from src import app, db
 from flask import jsonify, request
 from src.models.Section import Section
+from src.models.Question import Question
 
 @app.route('/sections', methods=['GET'])
 def get_sections_list():
@@ -32,4 +33,9 @@ def put_section(id):
   section.name = request.json.get('name')
   db.session.commit()
 
-  return jsonify(section.to_dict()), 200
+  return jsonify(section.to_dict())
+
+@app.route('/questions/sections/<int:section_id>', methods=['GET'])
+def get_questions_filtered_by_section_id(section_id):
+  questions = Question.query.filter_by(section_id=section_id)
+  return jsonify({"questions": [question.to_dict() for question in questions]}), 200
