@@ -10,10 +10,6 @@ function SectionModal(props) {
     const dispatch = useDispatch();
     const [newSection, setSection] = useState(section.name)
 
-    const handleChange = (e) => {
-      setSection(e.target.value);
-    }
-
     const handleClick = () => {
       dispatch(putSection(section.id, { name: newSection })).then(
         // memo: reloadはやめたほうがよさそう
@@ -25,7 +21,7 @@ function SectionModal(props) {
 
     return (
       <div>
-        <input type='text' value={newSection} onChange={handleChange}></input>
+        <input type='text' value={newSection} onChange={(e)=>{setSection(e.target.value)}}></input>
         <button onClick={handleClick}>更新</button>
       </div>
     )

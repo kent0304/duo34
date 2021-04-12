@@ -16,6 +16,9 @@ export default function Header() {
       <Link href="/admin/sections">
         <button>Sections管理</button>
       </Link>
+      <Link href="/admin/questions">
+        <button>Questions管理</button>
+      </Link>
     </div>
   )
 };
