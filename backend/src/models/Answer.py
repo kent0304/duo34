@@ -1,5 +1,6 @@
 import datetime as dt
 from src import db
+import pytz
 
 class Answer(db.Model):
   __tablename__ = 'answers'
@@ -8,7 +9,8 @@ class Answer(db.Model):
   conduction_id = db.Column(db.Integer, nullable=False)
   answer_text = db.Column(db.String(255), nullable=True)
   is_solve = db.Column(db.Boolean, nullable=False)
-  created_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
+  created_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.now(pytz.timezone('Asia/Tokyo')))
+  updated_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.now(pytz.timezone('Asia/Tokyo')))
 
   def __init__(self, conduction_id, question_id, answer_text, is_solve):
     self.conduction_id = conduction_id

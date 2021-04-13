@@ -1,4 +1,1 @@
-export const initialState = {
-  sections: {},
-  questions: {},
-}
+export const initialState = {}

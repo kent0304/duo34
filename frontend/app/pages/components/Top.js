@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { connect, useDispatch } from 'react-redux';
-import { fetchSections } from '../sections/actions'
-
+import { fetchSections } from '../sections/actions';
+import { conductTest } from '../conductions/actions';
 import _ from 'lodash';
 
 function Top(props) {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [selected_section, setSection] = useState(1);
   const options = props.state.sections.list;
@@ -13,17 +15,15 @@ function Top(props) {
     dispatch(fetchSections());
   }, [])
 
-
   const onSubmit = (e) => {
-    //　Todo: START_REQUESTをdispatch
-    console.log(options[selected_section].name)
-    e.preventDefault(); // 遷移を一旦ストップ
+    dispatch(conductTest(selected_section));
+    router.push('/questions');
+    e.preventDefault();
   }
 
   const onChange = (e) => {
     setSection(e.target.value);
   }
-
 
   const renderOptions = () => {
     return (
@@ -57,6 +57,6 @@ const mapStateToProps = state => {
     state
   }
 }
-const mapDispatchToProps = ({ fetchSections })
+const mapDispatchToProps = ({ fetchSections, conductTest })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Top);
