@@ -6,16 +6,18 @@ import Modal from 'react-modal';
 import QuestionModal from '../../components/QuestionModal';
 import Layout from '../../components/Layout';
 import _ from 'lodash';
+import styles from '../../../styles/Home.module.scss';
 
 function AdminQuestion(props) {
 
   const dispatch = useDispatch();
   const [newSectionId, setSectionId] = useState(1);
-  const [newNumber, setNumber] = useState(0);
+  const [newNumber, setNumber] = useState(1);
   const [newEnText, setEnText] = useState('');
   const [newJapText, setJapText] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [errorNumberText, setNumberError] = useState(null);
   let sections = props.state.sections.list;
 
   useEffect(() => {
@@ -75,7 +77,8 @@ function AdminQuestion(props) {
     return(
       <select
         value={newSectionId}
-        onChange={(e)=>{setSectionId(e.target.value)}}>
+        onChange={(e)=>{setSectionId(e.target.value)}}
+      >
         {renderOptions()}
       </select>
     )
@@ -87,8 +90,10 @@ function AdminQuestion(props) {
     const isFind = _.findKey(props.state.questions.list, { 'question_number': Number(value) });
     if(isFind !== undefined) {
       setIsDisabled(true);
+      setNumberError('存在しています');
     } else {
       setIsDisabled(false);
+      setNumberError(null);
     }
   }
 
@@ -118,9 +123,11 @@ function AdminQuestion(props) {
           <form onSubmit={handleSubmit}>
             <div>
               Number:
-              <input type='number' name='number' value={newNumber} onChange={(e)=>{handleNumberChange(e)}} />
+              <input type='number' name='number' value={newNumber} onChange={(e)=>{handleNumberChange(e)}} min='1' />
+              <div class={styles.error}>
+                {errorNumberText}
+              </div>
             </div>
-            {/* TODO: error メッセージ表示したい */}
             <div>
               Section:
               {renderSectionsList()}
