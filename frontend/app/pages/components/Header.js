@@ -7,8 +7,8 @@ export default function Header() {
       <Link href="/">
         <button>Top</button>
       </Link>
-      <Link href="/question">
-        <button>Question</button>
+      <Link href="/questions">
+        <button>Questions</button>
       </Link>
       <Link href="/result">
         <button>Result</button>
