@@ -16,8 +16,9 @@ class Section(db.Model):
     return {
       'id': self.id,
       'name': self.name,
-      'created_at': self.created_at
+      'created_at': self.created_at,
+      'updated_at': self.updated_at
     }
 
   def __repr__(self):
-    return '<Section(id={self.id} name={self.name}) created_at={self.created_at}>'.format(self=self)
+    return '<Section(id={self.id} name={self.name}) created_at={self.created_at} updated_at={self.updated_at}>'.format(self=self)

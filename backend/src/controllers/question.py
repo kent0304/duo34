@@ -15,6 +15,11 @@ def get_question(id=None):
   question = Question.query.filter_by(id=id).first()
   return jsonify(question.to_dict()), 200
 
+@app.route('/questions/sections/<int:id>', methods=['GET'])
+def get_questions_by_section_id(id=None):
+  question = Question.query.filter_by(id=id)
+  return jsonify({'questions': [question.to_dict() for question in questions]}), 200
+
 @app.route('/question', methods=['POST'])
 def post_question():
   question_number = request.json.get('question_number')

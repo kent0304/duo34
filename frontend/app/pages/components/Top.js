@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { connect, useDispatch } from 'react-redux';
 import { fetchSections } from '../sections/actions';
-import { conductTest } from '../conductions/actions';
+import { createConduction } from '../conductions/actions';
+import { fetchQuestionsById } from '../questions/actions';
 import _ from 'lodash';
 
 function Top(props) {
@@ -16,7 +17,9 @@ function Top(props) {
   }, [])
 
   const onSubmit = (e) => {
-    dispatch(conductTest(selected_section));
+    dispatch(createConduction()).then(()=>{
+      dispatch(fetchQuestionsById(selected_section));
+    });
     router.push('/questions');
     e.preventDefault();
   }
@@ -57,6 +60,6 @@ const mapStateToProps = state => {
     state
   }
 }
-const mapDispatchToProps = ({ fetchSections, conductTest })
+const mapDispatchToProps = ({ fetchSections, createConduction, fetchQuestionsById })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Top);

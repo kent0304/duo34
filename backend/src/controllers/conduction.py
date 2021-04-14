@@ -14,6 +14,5 @@ def conduct_test():
   db.session.add(conduction)
   db.session.commit()
 
-  questions = Question.query.filter_by(section_id=section_id)
-  return jsonify({"conduction": conduction.to_dict(), "questions": [question.to_dict() for question in questions]}), 200
+  return jsonify({ "conduction": conduction.to_dict() }), 201
 

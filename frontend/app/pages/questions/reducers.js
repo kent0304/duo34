@@ -1,4 +1,4 @@
-import { FETCH_QUESTIONS, FETCH_QUESTION, CREATE_QUESTION, PUT_QUESTION } from '../questions/actions';
+import { FETCH_QUESTIONS, FETCH_QUESTION, FETCH_QUESTIONS_FROM_SECTION, CREATE_QUESTION, PUT_QUESTION } from '../questions/actions';
 import { initialState } from '../store/initialState';
 
 import _ from 'lodash';
@@ -10,6 +10,8 @@ export const questionsReducer = (state = initialState, action) => {
     case FETCH_QUESTION:
       const selected_question = action.response.data
       return { ...state, selected_question: selected_question }
+    case FETCH_QUESTIONS_FROM_SECTION:
+      return { ...state, tests: _.mapKeys(action.response.data.questions, 'id') }
     case CREATE_QUESTION:
       const question = action.response.data
       return { ...state, [question.id]: question }

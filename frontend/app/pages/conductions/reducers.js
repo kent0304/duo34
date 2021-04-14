@@ -1,13 +1,12 @@
 import { initialState } from '../store/initialState';
-import { CONDUCT_TEST } from '../conductions/actions';
+import { CREATE_CONDUCTION } from '../conductions/actions';
 
 import _ from 'lodash';
 
 export const conductionsReducer = (state = initialState, action) => {
   switch(action.type) {
-    case CONDUCT_TEST:
+    case CREATE_CONDUCTION:
       return { 
-        questions: _.mapKeys(action.response.data.questions, 'id'),
         conduction: action.response.data.conduction
       }
     default:
