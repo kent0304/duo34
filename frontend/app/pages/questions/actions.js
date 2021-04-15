@@ -3,6 +3,7 @@ export const FETCH_QUESTIONS = 'FETCH_QUESTIONS';
 export const FETCH_QUESTION = 'FETCH_QUESTION';
 export const CREATE_QUESTION = 'CREATE_QUESTION';
 export const PUT_QUESTION = 'PUT_QUESTION';
+export const FETCH_QUESTIONS_FROM_SECTION = 'FETCH_QUESTIONS_FROM_SECTION';
 
 const ROOT_URL = 'http://localhost:5000';
 
@@ -14,6 +15,11 @@ export const fetchQuestions = () => async dispatch => {
 export const fetchQuestionById = (id) => async dispatch => {
   const response = await axios.get(`${ROOT_URL}/questions/${id}`)
   dispatch({ type: FETCH_QUESTION, response })
+}
+
+export const fetchQuestionsById = (id) => async dispatch => {
+  const response = await axios.get(`${ROOT_URL}/questions/sections/${id}`) // 修正
+  dispatch({ type: FETCH_QUESTIONS_FROM_SECTION, response })
 }
 
 export const postQuestion = (question) => async dispatch => {

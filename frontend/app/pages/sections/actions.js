@@ -4,7 +4,7 @@ export const FETCH_SECTION = 'FETCH_SECTION';
 export const CREATE_SECTION = 'CREATE_SECTION';
 export const PUT_SECTION = 'PUT_SECTION';
 
-const ROOT_URL = 'http://localhost:5000'
+const ROOT_URL = 'http://localhost:5000';
 
 export const fetchSections = () => async dispatch => {
   const response = await axios.get(`${ROOT_URL}/sections`)

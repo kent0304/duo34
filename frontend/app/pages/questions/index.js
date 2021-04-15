@@ -10,6 +10,5 @@ export default function Question() {
         ここは問題のページ
       </div>
     </Layout>
-    
   )
 }

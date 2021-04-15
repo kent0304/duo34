@@ -1,4 +1,5 @@
-import { Container } from 'next/app'
+import { Container } from 'next/app';
+import Head from 'next/head'
 import React from 'react'
 import { applyMiddleware } from "redux"
 import createStore from './store/store';
@@ -12,11 +13,14 @@ const enhancer = process.env.NODE_ENV === 'development' ?
 composeWithDevTools(applyMiddleware(thunk, logger)) : applyMiddleware(thunk);
 export const store = createStore(enhancer);
 
-
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-        <Component {...pageProps} />
+      <Head>
+        <title>DUO 3.4</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Component {...pageProps} />
     </Provider>
   )
 }

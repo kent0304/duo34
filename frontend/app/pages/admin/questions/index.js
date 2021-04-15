@@ -124,7 +124,7 @@ function AdminQuestion(props) {
             <div>
               Number:
               <input type='number' name='number' value={newNumber} onChange={(e)=>{handleNumberChange(e)}} min='1' />
-              <div class={styles.error}>
+              <div className={styles.error}>
                 {errorNumberText}
               </div>
             </div>
