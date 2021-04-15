@@ -17,10 +17,12 @@ function Top(props) {
   }, [])
 
   const onSubmit = (e) => {
-    dispatch(createConduction()).then(()=>{
-      dispatch(fetchQuestionsById(selected_section));
+    dispatch(fetchQuestionsById(selected_section));
+    dispatch(createConduction())
+    .then((res)=>{
+      const id = res.data.conduction.id;
+      router.push('/questions/[pid]', `/questions/${id}`);
     });
-    router.push('/questions');
     e.preventDefault();
   }
 

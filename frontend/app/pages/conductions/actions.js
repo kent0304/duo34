@@ -7,4 +7,5 @@ export const createConduction = (section_id) => async dispatch => {
   const paylaod = {'section_id': section_id}
   const response = await axios.post(`${ROOT_URL}/conduction`, paylaod);
   dispatch({ type: CREATE_CONDUCTION, response })
+  return response;
 }
