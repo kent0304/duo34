@@ -72,11 +72,27 @@ function ConductionQuiz(props) {
       )
   }
 
+  const renderJudgement = () => {
+    if(props.state.answers.answer.is_solve){
+      return (
+        <div>◯</div>
+      )
+    }else {
+      return (
+        <div>
+          <div>✖️</div>
+          <div>Correct:  {tests[currentIndex].english_text}</div>
+          <div>Yours: {props.state.answers.answer.answer_text}</div>
+        </div>
+      )
+    }
+  }
+
   const renderAnswer = () => {
     if(props.state.answers.is_display) {
       return (
         <div>
-          <div>答え表示</div>
+          {renderJudgement()}
           <button onClick={handleNext}>next</button>
         </div>
       )
