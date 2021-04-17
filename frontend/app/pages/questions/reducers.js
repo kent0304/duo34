@@ -11,7 +11,7 @@ export const questionsReducer = (state = initialState, action) => {
       const selected_question = action.response.data
       return { ...state, selected_question: selected_question }
     case FETCH_QUESTIONS_FROM_SECTION:
-      return { ...state, tests: _.mapKeys(action.response.data.questions, 'id') }
+      return { ...state, tests: action.response.data.questions }
     case CREATE_QUESTION:
       const question = action.response.data
       return { ...state, [question.id]: question }

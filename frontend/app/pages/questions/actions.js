@@ -18,7 +18,7 @@ export const fetchQuestionById = (id) => async dispatch => {
 }
 
 export const fetchQuestionsById = (id) => async dispatch => {
-  const response = await axios.get(`${ROOT_URL}/questions/sections/${id}`) // 修正
+  const response = await axios.get(`${ROOT_URL}/questions/sections/${id}`)
   dispatch({ type: FETCH_QUESTIONS_FROM_SECTION, response })
 }
 

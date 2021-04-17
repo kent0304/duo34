@@ -17,3 +17,14 @@ class Answer(db.Model):
     self.question_id = question_id
     self.answer_text = answer_text
     self.is_solve = is_solve
+
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'question_id': self.question_id,
+      'conduction_id': self.conduction_id,
+      'answer_text': self.answer_text,
+      'is_solve': self.is_solve,
+      'created_at': self.created_at,
+      'updated_at': self.updated_at,
+    }
