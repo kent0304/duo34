@@ -32,12 +32,11 @@ function ConductionQuiz(props) {
     })
     .then(() => {
       dispatch(openDisplay())
-    });
+    });    
   }
 
   const handleSubmit = () => {
-    console.log('submit')
-    router.push('/')
+    router.push('/questions/[pid]/result', `/questions/${pid}/result`);
   }
 
   const handleNext = () => {
@@ -46,14 +45,20 @@ function ConductionQuiz(props) {
     setText('');
   }
 
-  const renderButton = () => {
+  const renderAnswerButton = () => {
     if(props.state.answers.is_display) return null;
-    if(currentIndex < tests.length - 1) {
-      return (
-        <button onClick={handleClick}>回答</button>
+    return (
+      <button onClick={handleClick}>回答</button>
+    )
+  }
+
+  const renderNextButton = () => {
+    if(currentIndex < tests.length - 1){
+      return(
+        <button onClick={handleNext}>next</button>
       )
-    }else {
-      return (
+    } else {
+      return(
         <button onClick={handleSubmit}>採点</button>
       )
     }
@@ -67,7 +72,7 @@ function ConductionQuiz(props) {
           <p>No. {currentIndex + 1}</p>
           <p>Question: {test.japanese_text}</p>
           <p>Answer:<input type='text' value={inputText} onChange={(e) => {setText(e.target.value)}} /></p>
-          {renderButton()}
+          {renderAnswerButton()}
         </div>
       )
   }
@@ -93,7 +98,7 @@ function ConductionQuiz(props) {
       return (
         <div>
           {renderJudgement()}
-          <button onClick={handleNext}>next</button>
+          {renderNextButton()}
         </div>
       )
     }else{
